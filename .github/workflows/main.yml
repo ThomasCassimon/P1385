@@ -3,7 +3,7 @@ name: CI
 on: [push]
 
 jobs:
-  Build (x86-64, Linux, Clang):
+  Build_x86-64_Linux_Clang:
 
     runs-on: x64
     container: thomascassimon/p1385-clang
@@ -16,7 +16,7 @@ jobs:
         cd build
         cmake --build .
         
-  Build (x86-64, Linux, GCC):
+  Build_x86-64_Linux_GCC:
 
     runs-on: x64
     container: thomascassimon/p1385-gcc
