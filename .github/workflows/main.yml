@@ -3,11 +3,11 @@ name: CI
 on: [push]
 
 jobs:
-    Linux:
+    x86_64-Linux-Clang:
 
         runs-on: ubuntu-18.04
 
-        container: [thomascassimon/p1385-clang, thomascassimon/p1385-gcc]
+        container: thomascassimon/p1385-clang
 
         steps:
             - uses: actions/checkout@v1
@@ -18,3 +18,19 @@ jobs:
                   cmake -DCMAKE_BUILD_TYPE=Release ..
                   cmake --build . -j 4 --target P1385_Test_Suite
                   ./test/P1385_Test_Suite
+
+    x86_64-Linux-GCC:
+
+        runs-on: ubuntu-18.04
+
+        container: thomascassimon/p1385-gcc
+
+        steps:
+            -   uses: actions/checkout@v1
+            -   name: Test
+                run: |
+                    mkdir -p build
+                    cd build
+                    cmake -DCMAKE_BUILD_TYPE=Release ..
+                    cmake --build . -j 4 --target P1385_Test_Suite
+                    ./test/P1385_Test_Suite
