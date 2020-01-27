@@ -5,7 +5,7 @@ on: [push]
 jobs:
     Build_x86-64_Linux_Clang:
 
-        runs-on: x64
+        runs-on: ubuntu-18.04
         container: thomascassimon/p1385-clang
 
         steps:
@@ -18,7 +18,7 @@ jobs:
 
     Build_x86-64_Linux_GCC:
 
-        runs-on: x64
+        runs-on: ubuntu-18.04
         container: thomascassimon/p1385-gcc
 
         steps:
