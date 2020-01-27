@@ -4,6 +4,7 @@ project(P1385)
 set(CMAKE_CXX_STANDARD 20)
 
 set(P1385_Sources
+		"src/dr_vector_engine.cpp"
 		"src/linear_algebra.cpp")
 
 add_library(P1385 ${P1385_Sources})
