@@ -5,12 +5,9 @@ on: [push]
 jobs:
     Linux:
 
-        runs-on: ${{ matrix.os }}
+        runs-on: ubuntu-18.04
 
-        strategy:
-            matrix:
-                os: [ubuntu-18.04]
-                container: [thomascassimon/p1385-clang, thomascassimon/p1385-gcc]
+        container: [thomascassimon/p1385-clang, thomascassimon/p1385-gcc]
 
         steps:
             - uses: actions/checkout@v1
