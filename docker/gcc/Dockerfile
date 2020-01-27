@@ -1,8 +1,13 @@
-FROM alpine:3.11.3
+ARG ALPINE_VERSION
 
-RUN apk update			&&\
-	apk add				\
-		cmake=3.15.5-r0	\
-		make			\
-		gcc=9.2.0-r3	\
-		g++=9.2.0-r3	\
+FROM alpine:$ALPINE_VERSION
+
+ARG CMAKE_VERSION
+ARG GCC_VERSION
+
+RUN apk update					&&\
+	apk add						\
+		cmake=$CMAKE_VERSION	\
+		make					\
+		gcc=$GCC_VERSION		\
+		g++=$GCC_VERSION		\
