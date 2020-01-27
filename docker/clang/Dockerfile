@@ -7,4 +7,5 @@ RUN apk update	&&			\
 		cmake=3.15.5-r0		\
 		make				\
 		gcc=9.2.0-r3		\
+		libstdc++=9.2.0-r3	\
 		clang=9.0.0-r1
