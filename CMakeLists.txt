@@ -23,13 +23,20 @@ target_compile_options(P1385
 			-Wdouble-promotion
 			-Wformat=2
 
-			-Werror-return-type
-			-Werror-switch
-			-Werror-reorder
-			-Werror-shorten-64-to-32
-			-Werror-sign-conversion
-			-Werror-sign-compare
-			-Werror-old-style-cast
+			$<$<CXX_COMPILER_ID:clang>:-Werror-return-type>
+			$<$<CXX_COMPILER_ID:clang>:-Werror-switch>
+			$<$<CXX_COMPILER_ID:clang>:-Werror-reorder>
+			$<$<CXX_COMPILER_ID:clang>:-Werror-shorten-64-to-32>
+			$<$<CXX_COMPILER_ID:clang>:-Werror-sign-conversion>
+			$<$<CXX_COMPILER_ID:clang>:-Werror-sign-compare>
+			$<$<CXX_COMPILER_ID:clang>:-Werror-old-style-cast>
+
+			$<$<CXX_COMPILER_ID:gcc>:-Werror=return-type>
+			$<$<CXX_COMPILER_ID:gcc>:-Werror=switch>
+			$<$<CXX_COMPILER_ID:gcc>:-Werror=reorder>
+			$<$<CXX_COMPILER_ID:gcc>:-Werror=Werror-sign-conversion>
+			$<$<CXX_COMPILER_ID:gcc>:-Werror=sign-compare>
+			$<$<CXX_COMPILER_ID:gcc>:-Werror=old-style-cast>
 
 			-Wno-vla-extension
 )
