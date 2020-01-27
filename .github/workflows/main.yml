@@ -3,10 +3,13 @@ name: CI
 on: [push]
 
 jobs:
-    x86-64_Linux_Clang:
+    Linux:
 
-        runs-on: ubuntu-18.04
-        container: thomascassimon/p1385-clang
+        runs-on: ${{ matrix.os }}
+
+        strategy:
+            runs-on: ubuntu-18.04
+            container: [thomascassimon/p1385-clang, thomascassimon/p1385-gcc]
 
         steps:
             - uses: actions/checkout@v1
@@ -17,19 +20,3 @@ jobs:
                   cmake -DCMAKE_BUILD_TYPE=Release ..
                   cmake --build . -j 4 --target P1385_Test_Suite
                   ./test/P1385_Test_Suite
-
-
-    x86-64_Linux_GCC:
-
-        runs-on: ubuntu-18.04
-        container: thomascassimon/p1385-gcc
-
-        steps:
-            - uses: actions/checkout@v1
-            - name: Test
-              run: |
-                mkdir -p build
-                cd build
-                cmake -DCMAKE_BUILD_TYPE=Release ..
-                cmake --build . -j 4 --target P1385_Test_Suite
-                ./test/P1385_Test_Suite
