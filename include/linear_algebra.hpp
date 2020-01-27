@@ -155,7 +155,7 @@ namespace std::math
 	using dyn_vector = vector<dr_vector_engine<T, AT>, matrix_operation_traits>;
 
 	template <class T, class AT = allocator<T>>
-	using dyn_matrix = matrix<dr_matrix_engine<T, AT>, matrix_operation_traits>
+	using dyn_matrix = matrix<dr_matrix_engine<T, AT>, matrix_operation_traits>;
 
 	//- Convenience aliases for vector and matrix objects based on fixed-size engines.
 	//
