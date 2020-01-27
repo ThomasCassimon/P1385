@@ -76,31 +76,50 @@ namespace std::math
 			void swap_elements(size_type i, size_type j)	noexcept;
 
 		private:
+			constexpr static size_type DEFAULT_SIZE_ = 3;
 
+			allocator_type	alloc_;
+			pointer			data_;
+			size_type		elems_;
+			size_type		cap_;
 	};
 
 	template<class T, class AT>
 	dr_vector_engine<T, AT>::~dr_vector_engine()
 	{
-
+		if ((0 < this->cap_) && (this->data_ != nullptr))
+		{
+			std::allocator_traits<AT>::deallocate(this->alloc_, this->data_, this->cap_);
+		}
 	}
 
 	template<class T, class AT>
-	dr_vector_engine<T, AT>::dr_vector_engine()
-	{
+	dr_vector_engine<T, AT>::dr_vector_engine():
+		dr_vector_engine(0, DEFAULT_SIZE_)
+	{}
 
+	template<class T, class AT>
+	dr_vector_engine<T, AT>::dr_vector_engine(dr_vector_engine&& other) noexcept:
+		alloc_(std::move(other.alloc_)),
+		data_(std::move(other.data_)),
+		elems_(std::move(other.elems_)),
+		cap_(std::move(other.cap_))
+	{
+		other.alloc_ = AT();
+		other.data_ = nullptr;
+		other.elems_ = 0;
+		other.cap_ = 0;
 	}
 
 	template<class T, class AT>
-	dr_vector_engine<T, AT>::dr_vector_engine(dr_vector_engine&&) noexcept
+	dr_vector_engine<T, AT>::dr_vector_engine(const dr_vector_engine& other):
+		alloc_(other.alloc_),
+		data_(std::allocator_traits<AT>::allocate(this->alloc_, other.cap_)),
+		elems_(other.elems_),
+		cap_(other.cap_)
 	{
-
-	}
-
-	template<class T, class AT>
-	dr_vector_engine<T, AT>::dr_vector_engine(const dr_vector_engine&)
-	{
-
+		std::allocator_traits<AT>::construct(this->alloc_, this->data_);
+		std::copy(other.cbegin(), other.cend(), this->data_);
 	}
 
 	template<class T, class AT>
@@ -111,15 +130,18 @@ namespace std::math
 	}
 
 	template<class T, class AT>
-	dr_vector_engine<T, AT>::dr_vector_engine(dr_vector_engine::size_type elems)
-	{
-
-	}
+	dr_vector_engine<T, AT>::dr_vector_engine(dr_vector_engine::size_type elems):
+		dr_vector_engine(elems, elems)
+	{}
 
 	template<class T, class AT>
-	dr_vector_engine<T, AT>::dr_vector_engine(dr_vector_engine::size_type elems, dr_vector_engine::size_type elem_cap)
+	dr_vector_engine<T, AT>::dr_vector_engine(dr_vector_engine::size_type elems, dr_vector_engine::size_type elem_cap):
+		alloc_(),
+		data_(std::allocator_traits<AT>::allocate(this->alloc_, elem_cap)),
+		elems_(elems),
+		cap_(elem_cap)
 	{
-
+		std::allocator_traits<AT>::construct(this->alloc_, this->data_, this->elems_);
 	}
 
 	template<class T, class AT>
@@ -180,13 +202,13 @@ namespace std::math
 	template<class T, class AT>
 	typename dr_vector_engine<T, AT>::size_type dr_vector_engine<T, AT>::capacity() const noexcept
 	{
-		return 0;
+		return this->cap_;
 	}
 
 	template<class T, class AT>
 	typename dr_vector_engine<T, AT>::size_type dr_vector_engine<T, AT>::elements() const noexcept
 	{
-		return 0;
+		return this->elems_;
 	}
 
 	template<class T, class AT>
@@ -210,13 +232,13 @@ namespace std::math
 	template<class T, class AT>
 	typename dr_vector_engine<T, AT>::reference dr_vector_engine<T, AT>::operator()(dr_vector_engine::size_type i)
 	{
-		return ;
+		return this->data_[i];
 	}
 
 	template<class T, class AT>
 	typename dr_vector_engine<T, AT>::const_reference dr_vector_engine<T, AT>::operator()(dr_vector_engine::size_type i) const
 	{
-		return ;
+		return this->data_[i];
 	}
 
 	template<class T, class AT>
