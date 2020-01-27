@@ -23,8 +23,6 @@ target_compile_options(P1385
 			-Wdouble-promotion
 			-Wformat=2
 
-			$<$<CXX_COMPILER_ID:clang>:-stdlib=libstdc++>
-
 			$<$<CXX_COMPILER_ID:clang>:-Werror-return-type>
 			$<$<CXX_COMPILER_ID:clang>:-Werror-switch>
 			$<$<CXX_COMPILER_ID:clang>:-Werror-reorder>
