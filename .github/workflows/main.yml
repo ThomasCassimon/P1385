@@ -8,8 +8,9 @@ jobs:
         runs-on: ${{ matrix.os }}
 
         strategy:
-            runs-on: ubuntu-18.04
-            container: [thomascassimon/p1385-clang, thomascassimon/p1385-gcc]
+            matrix:
+                runs-on: ubuntu-18.04
+                container: [thomascassimon/p1385-clang, thomascassimon/p1385-gcc]
 
         steps:
             - uses: actions/checkout@v1
