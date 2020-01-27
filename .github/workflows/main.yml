@@ -1,0 +1,30 @@
+name: CI
+
+on: [push]
+
+jobs:
+  Build (x86-64, Linux, Clang):
+
+    runs-on: x64
+    container: thomascassimon/p1385-clang
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build
+      run: |
+        mkdir -p build
+        cd build
+        cmake --build .
+        
+  Build (x86-64, Linux, GCC):
+
+    runs-on: x64
+    container: thomascassimon/p1385-gcc
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build
+      run: |
+        mkdir -p build
+        cd build
+        cmake --build .
