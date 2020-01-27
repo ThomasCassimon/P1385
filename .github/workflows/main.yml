@@ -3,28 +3,28 @@ name: CI
 on: [push]
 
 jobs:
-  Build_x86-64_Linux_Clang:
+    Build_x86-64_Linux_Clang:
 
-    runs-on: x64
-    container: thomascassimon/p1385-clang
+        runs-on: x64
+        container: thomascassimon/p1385-clang
 
-    steps:
-    - uses: actions/checkout@v1
-    - name: Build
-      run: |
-        mkdir -p build
-        cd build
-        cmake --build .
-        
-  Build_x86-64_Linux_GCC:
+        steps:
+            - uses: actions/checkout@v1
+            - name: Build
+              run: |
+                  mkdir -p build
+                  cd build
+                  cmake --build .
 
-    runs-on: x64
-    container: thomascassimon/p1385-gcc
+    Build_x86-64_Linux_GCC:
 
-    steps:
-    - uses: actions/checkout@v1
-    - name: Build
-      run: |
-        mkdir -p build
-        cd build
-        cmake --build .
+        runs-on: x64
+        container: thomascassimon/p1385-gcc
+
+        steps:
+            - uses: actions/checkout@v1
+            - name: Build
+              run: |
+                  mkdir -p build
+                  cd build
+                  cmake --build .
