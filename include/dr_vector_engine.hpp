@@ -59,8 +59,8 @@ namespace std::math
 
 			//-	Capacity
 			//
-			size_type	capacity()	const noexcept;
-			size_type	elements()	const noexcept;
+			[[nodiscard]]	size_type	capacity()	const noexcept;
+			[[nodiscard]]	size_type	elements()	const noexcept;
 
 			void reserve(size_type cap);
 			void resize(size_type elems);
@@ -112,21 +112,24 @@ namespace std::math
 	}
 
 	template<class T, class AT>
-	dr_vector_engine<T, AT>::dr_vector_engine(const dr_vector_engine& other):
+	dr_vector_engine<T, AT>::dr_vector_engine(const dr_vector_engine<T, AT>& other):
 		alloc_(other.alloc_),
 		data_(std::allocator_traits<AT>::allocate(this->alloc_, other.cap_)),
 		elems_(other.elems_),
 		cap_(other.cap_)
 	{
-		std::allocator_traits<AT>::construct(this->alloc_, this->data_);
-		std::copy(other.cbegin(), other.cend(), this->data_);
+		for (size_type i = 0; i < this->elems_; ++i)
+		{
+			std::allocator_traits<AT>::construct(this->alloc_, &this->data_[i], other.data_[i]);
+		}
 	}
 
 	template<class T, class AT>
 	template<class U>
-	dr_vector_engine<T, AT>::dr_vector_engine(initializer_list<U> list)
+	dr_vector_engine<T, AT>::dr_vector_engine(initializer_list<U> list):
+		dr_vector_engine<T, AT>(list.size())
 	{
-
+		std::copy_n(list.begin(), list.size(), this->data_);
 	}
 
 	template<class T, class AT>
