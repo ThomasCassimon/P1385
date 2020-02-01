@@ -188,3 +188,37 @@ TEST_CASE("dr_vector_engine Initializer List Constructor", "[dr_vector_engine][i
 		}
 	}
 }
+
+TEST_CASE("dr_vector_engine Single Argument Constructor", "[dr_vector_engine][single][argument][constructor]")
+{
+	SECTION("dr_vector_engine<unsigned short, std::allocator<unsigned short>>")
+	{
+		std::math::dr_vector_engine<unsigned short, std::allocator<unsigned short>> engine (3);
+
+		REQUIRE(engine.elements() == 3);
+		CHECK(engine.capacity() >= 3);
+
+		for (std::size_t i = 0; i < engine.elements(); ++i)
+		{
+			CHECK(engine(i) == 0);
+		}
+	}
+
+	SECTION("dr_vector_engine<float, std::allocator<float>>")
+	{
+		std::math::dr_vector_engine<float, std::allocator<float>> engine (3);
+
+		REQUIRE(engine.elements() == 3);
+		CHECK(engine.capacity() >= 3);
+
+		for (std::size_t i = 0; i < engine.elements(); ++i)
+		{
+			CHECK(engine(i) == Approx(0.0));
+		}
+	}
+}
+
+TEST_CASE("dr_vector_engine Two Argument Constructor", "[dr_vector_engine][two][argument][constructor]")
+{
+
+}
